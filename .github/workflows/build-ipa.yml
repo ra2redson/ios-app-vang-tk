@@ -1,0 +1,49 @@
+name: Build Unsigned IPA for TrollStore
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Init Capacitor & Add iOS
+        run: |
+          mkdir -p www && echo "<h1>Loading...</h1>" > www/index.html
+          npm install
+          npm install @capacitor/assets --save-dev
+          npx cap add ios
+          npx capacitor-assets generate --ios --iconPath icon.png
+
+      - name: Build Xcode Archive (Unsigned)
+        run: |
+          cd ios/App
+          xcodebuild -project App.xcodeproj \
+            -scheme App \
+            -configuration Release \
+            -sdk iphoneos \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            build
+
+      - name: Package into IPA
+        run: |
+          mkdir -p Payload
+          cp -r ios/App/build/Release-iphoneos/App.app Payload/
+          zip -r App.ipa Payload
+
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MyWebViewApp-IPA
+          path: App.ipa
