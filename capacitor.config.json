@@ -1,0 +1,9 @@
+{
+  "appId": "com.fen.webapp",
+  "appName": "Ten App Cua Fen",
+  "webDir": "www",
+  "server": {
+    "url": "https://ten-tai-khoan.github.io/ten-repo",
+    "cleartext": true
+  }
+}
