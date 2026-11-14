@@ -41,9 +41,15 @@ jobs:
       - name: Package into IPA
         run: |
           mkdir -p Payload
-          # Dùng lệnh find để tự động tìm chính xác file App.app bất kể nó nằm ở đâu
-          APP_PATH=$(find . -name "App.app" -type d | head -n 1)
-          echo "Found app at: $APP_PATH"
+          # Trỏ trực tiếp vào thư mục build mặc định của DerivedData trên GitHub Actions runner
+          APP_PATH=$(find ~/Library/Developer/Xcode/DerivedData -name "App.app" -type d | head -n 1)
+          
+          if [ -z "$APP_PATH" ]; then
+            echo "Lỗi: Không tìm thấy file App.app!"
+            exit 1
+          fi
+          
+          echo "Tìm thấy app tại: $APP_PATH"
           cp -r "$APP_PATH" Payload/
           zip -r App.ipa Payload
 
