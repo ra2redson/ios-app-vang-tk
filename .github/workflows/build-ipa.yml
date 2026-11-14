@@ -41,8 +41,10 @@ jobs:
       - name: Package into IPA
         run: |
           mkdir -p Payload
-          # Trỏ đúng đường dẫn sản phẩm build ra từ Workspace
-          cp -r ios/App/build/Release-iphoneos/App.app Payload/
+          # Dùng lệnh find để tự động tìm chính xác file App.app bất kể nó nằm ở đâu
+          APP_PATH=$(find . -name "App.app" -type d | head -n 1)
+          echo "Found app at: $APP_PATH"
+          cp -r "$APP_PATH" Payload/
           zip -r App.ipa Payload
 
       - name: Upload IPA Artifact
