@@ -20,7 +20,6 @@ jobs:
         run: |
           mkdir -p www && echo "<h1>Loading...</h1>" > www/index.html
           npm install
-          npm install @capacitor/assets --save-dev
           npx cap add ios
           npx capacitor-assets generate --assetPath icon.png
           cd ios/App && pod install
