@@ -22,7 +22,7 @@ jobs:
           npm install
           npm install @capacitor/assets --save-dev
           npx cap add ios
-          npx capacitor-assets generate --ios --iconPath icon.png
+          npx capacitor-assets generate --assetPath icon.png
 
       - name: Build Xcode Archive (Unsigned)
         run: |
