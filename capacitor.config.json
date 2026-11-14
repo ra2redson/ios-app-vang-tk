@@ -1,9 +1,9 @@
 {
-  "appId": "com.fen.webapp",
-  "appName": "Ten App Cua Fen",
+  "appId": "com.ios.vangvstk",
+  "appName": "GOLD MONEY",
   "webDir": "www",
   "server": {
-    "url": "https://ten-tai-khoan.github.io/ten-repo",
+    "url": "https://ra2redson.github.io/vang-vs-tiet-kiem/",
     "cleartext": true
   }
 }
