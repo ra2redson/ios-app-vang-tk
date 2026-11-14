@@ -41,6 +41,7 @@ jobs:
       - name: Package into IPA
         run: |
           mkdir -p Payload
+          # Trỏ đúng đường dẫn sản phẩm build ra từ Workspace
           cp -r ios/App/build/Release-iphoneos/App.app Payload/
           zip -r App.ipa Payload
 
