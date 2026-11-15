@@ -21,7 +21,7 @@ jobs:
           mkdir -p www && echo "<h1>Loading...</h1>" > www/index.html
           npm install
           npx cap add ios
-          npx capacitor-assets generate --assetPath icon.png
+          npx capacitor-assets generate --assetPath my-gold-icon.png
           cd ios/App && pod install
 
       - name: Build Xcode Archive (Unsigned)
