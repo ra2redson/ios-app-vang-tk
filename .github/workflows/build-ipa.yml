@@ -16,13 +16,18 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Init Capacitor & Add iOS
+      - name: Clean and Init Fresh Capacitor Project
         run: |
           mkdir -p www && echo "<h1>Loading...</h1>" > www/index.html
           npm install
+          npm install @capacitor/assets --save-dev
+          
+          # Dọn sạch triệt để toàn bộ tệp rác, thư mục ios cũ và cache trong workspace
+          rm -rf ios node_modules package-lock.json
+          
+          npm install
           npx cap add ios
-          npx capacitor-assets generate --assetPath my-gold-icon.png
-          cd ios/App && pod install
+          npx capacitor-assets generate --assetPath icon.png
 
       - name: Build Xcode Archive (Unsigned)
         run: |
@@ -40,7 +45,6 @@ jobs:
       - name: Package into IPA
         run: |
           mkdir -p Payload
-          # Trỏ trực tiếp vào thư mục build mặc định của DerivedData trên GitHub Actions runner
           APP_PATH=$(find ~/Library/Developer/Xcode/DerivedData -name "App.app" -type d | head -n 1)
           
           if [ -z "$APP_PATH" ]; then
